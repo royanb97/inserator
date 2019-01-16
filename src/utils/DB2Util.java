@@ -41,7 +41,7 @@ public final class DB2Util {
         
         InputStream input = null;
     	try {
-    		input = new FileInputStream("settings.properties");
+    		input = new FileInputStream("C:\\users\\royan\\Desktop\\eclipseEE\\inserator\\settings.properties");
 
     		// Zugangsdaten aus der Properties-Datei lesen
     		properties.load(input);

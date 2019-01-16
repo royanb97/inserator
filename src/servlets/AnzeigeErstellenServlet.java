@@ -2,10 +2,12 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import utils.DB2Util;
 import javax.servlet.RequestDispatcher;
@@ -27,10 +29,9 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
 		String errorMsg= null;
-		float price =  Float.parseFloat(request.getParameter("price"));
-		if(price < 0)
-			errorMsg = "Preisfeld kann nicht kleiner als 0 EUR sein.";
+		double price = Double.parseDouble(request.getParameter("price"));
 		String description = request.getParameter("description");
+		
 		if(description.length()>100)
 			errorMsg = "Laenge der Beschreibung Ueberschreitet die Anzahl erlaubter Zeichen von 100";
 		String category = request.getParameter("category");
@@ -40,33 +41,32 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 			out.println("<font color=red>"+errorMsg+"</font>");
 			rd.include(request, response);
 		} else {
-			PreparedStatement ps = null;
-			ResultSet rs = null;
+			Connection con;
 			try {
-				Connection con;
 				con = DB2Util.getExternalConnection("project");
-				ps = con.prepareStatement("insert into anzeige values(?,?,?,?,?)");
-				ps.setString(1, title);
-				ps.setString(2, description);
-				ps.setFloat(3, price);
-				ps.setString(4, "John Doe");
-				ps.setString(5, "aktiv");
-				rs = ps.executeQuery();
-		
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				try {
-					rs.close();
+				try (PreparedStatement ps = con.prepareStatement("insert into anzeige (titel, text, preis, ersteller, status) values(?,?,?,?,?)");) {
+					ps.setString(1, title);
+					ps.setString(2, description);
+					ps.setDouble(3, price);
+					ps.setString(4, "JohnDoe");
+					ps.setString(5, "aktiv");
+					System.out.println(description + title);
+					ps.execute();
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("hello.html");
+					rd.include(request, response); 
 					ps.close();
+					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
+				} 
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+			
+				
+			
 		}
 	}
 

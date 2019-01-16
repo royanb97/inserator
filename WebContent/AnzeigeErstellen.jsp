@@ -4,7 +4,7 @@
 <html>
    <body>
       <h1>Erstelle eine Anzeige</h1>
-      <form action = "" method = "POST">
+      <form action = "AnzeigeErstellenServlet" method = "POST">
          Titel: <input type = "text" name = "title" required />
          <br />
          Preis: <input type = "text" name = "price" required />
