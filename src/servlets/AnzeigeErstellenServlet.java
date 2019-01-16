@@ -30,6 +30,8 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String errorMsg= null;
 		double price = Double.parseDouble(request.getParameter("price"));
+		if (price<0)
+			errorMsg = "Preis darf nicht negativ sein.";
 		String description = request.getParameter("description");
 		
 		if(description.length()>100)
@@ -38,6 +40,8 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 		if(errorMsg != null){
 			PrintWriter out= response.getWriter();
 			out.println("<font color=red>"+errorMsg+"</font>");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellen.jsp");
+			rd.include(request, response);
 			
 		} else {
 			Connection con;
