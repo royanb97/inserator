@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 public class Anzeige implements Serializable {
 	private String title;
+	private float price;
+	private String description;
+	private String category;
+	
+	
+	
+	
 	public String getTitle() {
 		return title;
 	}
@@ -12,11 +19,11 @@ public class Anzeige implements Serializable {
 		this.title = title;
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
@@ -36,11 +43,8 @@ public class Anzeige implements Serializable {
 		this.category = category;
 	}
 
-	private int price;
-	private String description;
-	private String category;
-	
-	public Anzeige(String title, int price, String description, String category) {
+
+	public Anzeige(String title, float price, String description, String category) {
 		this.title=title;
 		this.price=price;
 		this.description=description;
