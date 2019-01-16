@@ -5,9 +5,9 @@
    <body>
       <h1>Erstelle eine Anzeige</h1>
       <form action = "" method = "POST">
-         Titel: <input type = "text" name = "first_name">
+         Titel: <input type = "text" name = "title">
          <br />
-         Preis: <input type = "text" name = "last_name" />
+         Preis: <input type = "text" name = "price" />
          <br />
          Beschreibung: <input type = "text" name = "description" />
          <br />
