@@ -43,7 +43,7 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 			Connection con;
 			try {
 				con = DB2Util.getExternalConnection("project");
-				try (PreparedStatement ps = con.prepareStatement("insert into anzeige (titel, text, preis, ersteller, status) values(?,?,?,?,?)");) {
+				try (PreparedStatement ps = con.prepareStatement("insert into dbp20.anzeige (titel, text, preis, ersteller, status) values(?,?,?,?,?)");) {
 					ps.setString(1, title);
 					ps.setString(2, description);
 					ps.setDouble(3, price);
@@ -51,7 +51,7 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 					ps.setString(5, "aktiv");
 					System.out.println(description + title);
 					ps.execute();
-					RequestDispatcher rd = getServletContext().getRequestDispatcher("");
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellt.html");
 					rd.include(request, response); 
 					ps.close();
 					
