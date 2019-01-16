@@ -21,6 +21,8 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 		if(price < 0)
 			errorMsg = "Preisfeld kann nicht kleiner als 0€ sein.";
 		String description = request.getParameter("description");
+		if(description.length()>100)
+			errorMsg = "Länge der Beschreibung überschreitet die Anzahl erlaubter Zeichen von 100";
 		String category = request.getParameter("category");
 		
 		doGet(request, response);

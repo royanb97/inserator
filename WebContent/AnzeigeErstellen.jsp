@@ -5,11 +5,11 @@
    <body>
       <h1>Erstelle eine Anzeige</h1>
       <form action = "" method = "POST">
-         Titel: <input type = "text" name = "title">
+         Titel: <input type = "text" name = "title" required />
          <br />
-         Preis: <input type = "text" name = "price" />
+         Preis: <input type = "text" name = "price" required />
          <br />
-         Beschreibung: <input type = "text" name = "description" />
+         Beschreibung: <input type = "text" name = "description" style="width: 350px; height: 100px" />
          <br />
          Kategorie: <input type="radio" name="category" value="Digitale Waren" checked> Digitale Waren
          			<input type="radio" name="category" value="Haus und Garten"> Haus & Garten
