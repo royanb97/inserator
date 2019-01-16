@@ -36,10 +36,9 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 			errorMsg = "Laenge der Beschreibung Ueberschreitet die Anzahl erlaubter Zeichen von 100";
 		String category = request.getParameter("category");
 		if(errorMsg != null){
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
 			PrintWriter out= response.getWriter();
 			out.println("<font color=red>"+errorMsg+"</font>");
-			rd.include(request, response);
+			
 		} else {
 			Connection con;
 			try {
@@ -48,11 +47,11 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 					ps.setString(1, title);
 					ps.setString(2, description);
 					ps.setDouble(3, price);
-					ps.setString(4, "JohnDoe");
+					ps.setString(4, "k.ralf");
 					ps.setString(5, "aktiv");
 					System.out.println(description + title);
 					ps.execute();
-					RequestDispatcher rd = getServletContext().getRequestDispatcher("hello.html");
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("");
 					rd.include(request, response); 
 					ps.close();
 					
