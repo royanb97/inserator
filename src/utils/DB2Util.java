@@ -39,25 +39,25 @@ public final class DB2Util {
     public static Connection getExternalConnection(String database) throws SQLException {
         Properties properties = new Properties();
         
-        InputStream input = null;
+        /*InputStream input = null;
     	try {
-    		input = new FileInputStream("C:\\users\\royan\\Desktop\\eclipseEE\\inserator\\settings.properties");
+    		input = new FileInputStream("user/settings.properties");
 
     		// Zugangsdaten aus der Properties-Datei lesen
     		properties.load(input);
     	} catch (IOException ex) {
     		ex.printStackTrace();
-    	}
+    	} 
     	
 		String user = properties.getProperty("gruppenname");
 		String pass = properties.getProperty("passwort");
-		String rechnername = properties.getProperty("rechnername");
+		String rechnername = properties.getProperty("rechnername"); 
 		
 		String gruppennummer = user.substring(user.length()-2,user.length());
-		System.out.println(gruppennummer);
+		System.out.println(gruppennummer); */
 
-        final String url = "jdbc:db2://"+rechnername+".is.inf.uni-due.de:500"+gruppennummer+"/" + database + ":currentSchema="+user+";";
-        Connection connection = DriverManager.getConnection(url, user,pass);
+        final String url = "jdbc:db2://"+"helios"+".is.inf.uni-due.de:500"+"20"+"/" + database + ":currentSchema="+"dbp20"+";";
+        Connection connection = DriverManager.getConnection(url, "dbp20","azud4roh");
         return connection;
     }
 
