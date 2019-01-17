@@ -53,7 +53,7 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 					ps.setDouble(3, price);
 					ps.setString(4, "k.ralf");
 					ps.setString(5, "aktiv");
-					System.out.println(description + title);
+					System.out.println("Erstelle " + title + ", " + description);
 					ps.execute();
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellt.html");
 					rd.include(request, response); 
