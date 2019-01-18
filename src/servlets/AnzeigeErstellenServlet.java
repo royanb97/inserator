@@ -29,7 +29,7 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
 		String errorMsg= null;
-		double price = Double.parseDouble(request.getParameter("price"));
+		float price = Float.parseFloat(request.getParameter("price"));
 		if (price<0)
 			errorMsg = "Preis darf nicht negativ sein.";
 		String description = request.getParameter("description");
@@ -47,17 +47,20 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 			Connection con;
 			try {
 				con = DB2Util.getExternalConnection("project");
-				try (PreparedStatement ps = con.prepareStatement("insert into dbp20.anzeige (titel, text, preis, ersteller, status) values(?,?,?,?,?)");) {
+				try (PreparedStatement ps = con.prepareStatement("insert into dbp20.anzeige (titel, text, preis, ersteller, status) values(?,?,?,?,?)");
+						PreparedStatement ps2 = con.prepareStatement("insert into dbp20.hatkategorie (kategorie) values (?)");) {
 					ps.setString(1, title);
 					ps.setString(2, description);
-					ps.setDouble(3, price);
+					ps.setFloat(3, price);
 					ps.setString(4, "k.ralf");
 					ps.setString(5, "aktiv");
-					System.out.println("Erstelle " + title + ", " + description);
+					ps2.setString(1, category);
+					System.out.println("Erstelle " + title + ", " + description + " mit Kategorie " + category);
 					ps.execute();
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellt.html");
 					rd.include(request, response); 
 					ps.close();
+					ps2.close();
 					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

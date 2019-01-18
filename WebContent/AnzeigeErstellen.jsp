@@ -12,9 +12,9 @@
          Beschreibung: <input type = "text" name = "description" style="width: 350px; height: 100px" />
          <br />
          Kategorie: <input type="radio" name="category" value="Digitale Waren" checked> Digitale Waren
-         			<input type="radio" name="category" value="Haus und Garten"> Haus & Garten
-         			<input type="radio" name="category" value="Mode und Kosmetik"> Mode & Kosmetik
-         			<input type="radio" name="category" value="Multimedia und Elektronik"> Multimedia & Elektronik
+         			<input type="radio" name="category" value="Haus & Garten"> Haus & Garten
+         			<input type="radio" name="category" value="Mode & Kosmetik"> Mode & Kosmetik
+         			<input type="radio" name="category" value="Multimedia & Elektronik"> Multimedia & Elektronik
          			
          <input type = "submit" value = "Erstellen" />
       </form>
