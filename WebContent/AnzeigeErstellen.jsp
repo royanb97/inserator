@@ -9,7 +9,7 @@
          <br />
          Preis: <input type = "text" name = "price" required />
          <br />
-         Beschreibung: <input type = "text" name = "description" style="width: 350px; height: 100px" />
+         Beschreibung: <input type = "text" name = "description" style="width: 350px; height: 100px" required />
          <br />
          Kategorie: <input type="radio" name="category" value="Digitale Waren" checked> Digitale Waren
          			<input type="radio" name="category" value="Haus & Garten"> Haus & Garten

@@ -1,5 +1,6 @@
 package servlets;
 
+import java.beans.Statement;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -48,19 +49,35 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 			try {
 				con = DB2Util.getExternalConnection("project");
 				try (PreparedStatement ps = con.prepareStatement("insert into dbp20.anzeige (titel, text, preis, ersteller, status) values(?,?,?,?,?)");
-						PreparedStatement ps2 = con.prepareStatement("insert into dbp20.hatkategorie (kategorie) values (?)");) {
+						PreparedStatement ps2 = con.prepareStatement("insert into dbp20.hatkategorie (anzeigeid, kategorie) values (?,?)");) {
+					
+					
 					ps.setString(1, title);
 					ps.setString(2, description);
 					ps.setFloat(3, price);
 					ps.setString(4, "k.ralf");
 					ps.setString(5, "aktiv");
-					ps2.setString(1, category);
-					System.out.println("Erstelle " + title + ", " + description + " mit Kategorie " + category);
+					
 					ps.execute();
-					RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellt.html");
-					rd.include(request, response); 
+					
+					int id=0;
+					PreparedStatement stmt = con.prepareStatement("SELECT ID FROM dbp20.anzeige ORDER BY id DESC FETCH FIRST ROW ONLY");
+					ResultSet rs = stmt.executeQuery();
+					while(rs.next())
+					id = rs.getInt("id");
+					System.out.println("Erstelle " + title + ", " + description + " mit Kategorie " + category + " mit ID " + id);
+					ps2.setInt(1, id);					
+					ps2.setString(2, category);
+					
+					
+					ps2.execute();					
+ 
 					ps.close();
 					ps2.close();
+					rs.close();
+					
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellt.html");
+					rd.include(request, response);
 					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
