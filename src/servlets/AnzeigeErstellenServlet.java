@@ -80,11 +80,17 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 					rd.include(request, response);
 					
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					PrintWriter out= response.getWriter();
+					out.println("<font color=red>"+"Sorry, connection to database failed."+"</font>");
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellen.jsp");
+					rd.include(request, response);
 					e.printStackTrace();
 				} 
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
+				PrintWriter out= response.getWriter();
+				out.println("<font color=red>"+"Sorry, connection to database failed."+"</font>");
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/AnzeigeErstellen.jsp");
+				rd.include(request, response);
 				e1.printStackTrace();
 			}
 			
