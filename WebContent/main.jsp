@@ -8,5 +8,8 @@
 </head>
 <body>
  <h1>Übersicht über alle Artikel</h1>
+ <form action="AnzeigeErstellen.jsp">
+    <input type="submit" value="Erstelle eine neue Kleinanzeige" />
+</form>
 </body>
 </html>
