@@ -38,6 +38,10 @@ public class mainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/main.jsp");
+		rd.include(request, response);
+		
+		
 		String title = null;
 		float price = 0;
 		String text = null;
@@ -46,7 +50,7 @@ public class mainServlet extends HttpServlet {
 		Connection con = null;
 		try {
 			con = DB2Util.getExternalConnection("project");
-			PreparedStatement ps = con.prepareStatement("SELECT Titel, Preis, Text, Ersteller FROM dbp20.anzeige");
+			PreparedStatement ps = con.prepareStatement("SELECT Titel, Preis, Text, Ersteller FROM dbp20.anzeige WHERE status='aktiv'");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				title = rs.getString("Titel");
