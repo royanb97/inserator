@@ -60,7 +60,7 @@ public class mainServlet extends HttpServlet {
 				System.out.println(title + price + text + creator);
 				PrintWriter out= response.getWriter();
 				out.write("<img src='/WebContent/placeholder.jpg' />");
-				out.write(title + " " + ", " + price + ", " + text + ", " + creator + "<br />" + "<br />");
+				out.write("<a href=''>" + title + "</a>" + " " + ", " + price + ", " + text + ", " + creator + "<br />" + "<br />");
 			}
 		} catch (SQLException sqle) {
 			PrintWriter dberr = response.getWriter();
