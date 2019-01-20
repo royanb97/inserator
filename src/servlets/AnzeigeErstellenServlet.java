@@ -47,7 +47,7 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 		} else {
 			Connection con;
 			try {
-				con = DB2Util.getExternalConnection("project");
+				con = DB2Util.getExternalConnection("jspprj");
 				try (PreparedStatement ps = con.prepareStatement("insert into dbp20.anzeige (titel, text, preis, ersteller, status) values(?,?,?,?,?)");
 						PreparedStatement ps2 = con.prepareStatement("insert into dbp20.hatkategorie (anzeigeid, kategorie) values (?,?)");) {
 					

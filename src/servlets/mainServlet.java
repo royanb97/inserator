@@ -49,7 +49,7 @@ public class mainServlet extends HttpServlet {
 		
 		Connection con = null;
 		try {
-			con = DB2Util.getExternalConnection("project");
+			con = DB2Util.getExternalConnection("jspprj");
 			PreparedStatement ps = con.prepareStatement("SELECT Titel, Preis, Text, Ersteller FROM dbp20.anzeige WHERE status='aktiv'");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -59,8 +59,9 @@ public class mainServlet extends HttpServlet {
 				creator = rs.getString("Ersteller");
 				System.out.println(title + price + text + creator);
 				PrintWriter out= response.getWriter();
-				out.write("<img src='/WebContent/placeholder.jpg' />");
-				out.write("<a href=''>" + title + "</a>" + " " + ", " + price + ", " + text + ", " + creator + "<br />" + "<br />");
+				out.write("<br/>");
+				out.write("<img src=\"placeholder.jpg\" height=\"200\" width=\"300\" />" + "<br/>" + "<br/>");
+				out.write("<a href=\"\">" + title + "</a>" + " " + ", " + price + " EUR, " + text + ", " + "<a href=\"\">" + creator + "</a>" + "<br />" + "<br />");
 			}
 		} catch (SQLException sqle) {
 			PrintWriter dberr = response.getWriter();
