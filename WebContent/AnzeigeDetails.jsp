@@ -23,9 +23,8 @@
 	<% } %>
 	
 	<button onclick="window.location.href='AnzeigeEditServlet?id=<%= request.getAttribute("id") %>';">Bearbeiten</button>
+	<button onclick="window.location.href='Delete?id=<%= request.getAttribute("id") %>';">Löschen</button>
 	
-	
-	<button>Löschen</button>
 	<br/>
 	<hr/>
 	<h3>Kommentare</h3>
