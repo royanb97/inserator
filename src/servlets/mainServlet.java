@@ -47,11 +47,12 @@ public class mainServlet extends HttpServlet {
 		String text = null;
 		String creator = null;
 		int anzeigeid = 0;
+		String timestamp = null;
 		
 		Connection con = null;
 		try {
 			con = DB2Util.getExternalConnection("jspprj");
-			PreparedStatement ps = con.prepareStatement("SELECT Titel, Preis, Text, Ersteller, id FROM dbp20.anzeige WHERE status='aktiv'");
+			PreparedStatement ps = con.prepareStatement("SELECT Titel, Preis, Text, Ersteller, id, Erstellungsdatum FROM dbp20.anzeige WHERE status='aktiv'");
 			ResultSet rs = ps.executeQuery();
 			String anzeigeParam = null;
 			
@@ -61,11 +62,11 @@ public class mainServlet extends HttpServlet {
 				text = rs.getString("Text");
 				creator = rs.getString("Ersteller");
 				anzeigeid = rs.getInt("id");
-				System.out.println(title + price + text + creator + anzeigeid);
+				timestamp = rs.getString("erstellungsdatum");
 				PrintWriter out= response.getWriter();
 				out.write("<br/>");
 				out.write("<img src=\"placeholder.jpg\" height=\"200\" width=\"300\" />" + "<br/>" + "<br/>");
-				out.write("<a href=\"AnzeigeDetails?anzeigeParam=" + anzeigeid + "\">" + title + "</a>" + " " + ", " + price + " EUR, " + text + ", " + "<a href=\"\">" + creator + "</a>" + "<br />" + "<br />");
+				out.write("<a href=\"AnzeigeDetails?anzeigeParam=" + anzeigeid + "\">" + title + "</a>" + " " + ", " + price + " EUR, " + text + ", erstellt am " + timestamp + " von " + "<a href=\"\">" + creator + "</a>" + "<br />" + "<br />");
 			}
 		} catch (SQLException sqle) {
 			PrintWriter dberr = response.getWriter();
