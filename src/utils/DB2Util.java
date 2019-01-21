@@ -56,7 +56,7 @@ public final class DB2Util {
 		String gruppennummer = user.substring(user.length()-2,user.length());
 		System.out.println(gruppennummer); */
 
-        final String url = "jdbc:db2://"+"helios"+".is.inf.uni-due.de:500"+"20"+"/" + database + ":currentSchema="+"dbp20"+";";
+        final String url = "jdbc:db2://"+"dione"+".is.inf.uni-due.de:500"+"20"+"/" + database + ":currentSchema="+"dbp20"+";";
         Connection connection = DriverManager.getConnection(url, "dbp20","azud4roh");
         return connection;
     }
