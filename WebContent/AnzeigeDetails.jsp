@@ -22,8 +22,9 @@
 	 <button onclick="window.location.href = 'Kaufen?id=<%= request.getAttribute("id")%>';">Kaufen</button>
 	<% } %>
 	
+	<button onclick="window.location.href='AnzeigeEditServlet?id=<%= request.getAttribute("id") %>';">Bearbeiten</button>
 	
-	<button>Bearbeiten</button>
+	
 	<button>Löschen</button>
 	<br/>
 	<hr/>
