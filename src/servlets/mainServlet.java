@@ -66,7 +66,7 @@ public class mainServlet extends HttpServlet {
 				PrintWriter out= response.getWriter();
 				out.write("<br/>");
 				out.write("<img src=\"placeholder.jpg\" height=\"200\" width=\"300\" />" + "<br/>" + "<br/>");
-				out.write("<a href=\"AnzeigeDetails?anzeigeParam=" + anzeigeid + "\">" + title + "</a>" + " " + ", " + price + " EUR, " + text + ", erstellt am " + timestamp + " von " + "<a href=\"\">" + creator + "</a>" + "<br />" + "<br />");
+				out.write("<a href=\"AnzeigeDetails?anzeigeParam=" + anzeigeid + "\">" + title + "</a>" + " " + ", " + price + " EUR, " + text + ", erstellt am " + timestamp + " von " + "<a href=\"user?user=" + creator + "\">" + creator + "</a>" + "<br />" + "<br />");
 			}
 		} catch (SQLException sqle) {
 			PrintWriter dberr = response.getWriter();

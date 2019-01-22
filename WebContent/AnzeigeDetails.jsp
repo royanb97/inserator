@@ -10,7 +10,7 @@
 	<h1>Anzeige Details</h1>
 	
 	<h2><%= request.getAttribute("title") %></h2>
-	<h4>von <%= request.getAttribute("seller") %></h4>
+	<h4>von <a href="user?user=<%= request.getAttribute("seller") %>"> <%= request.getAttribute("seller") %></a></h4>
 	<img src="placeholder.jpg" height=300 width=500/>
 	<br/>
 	<p><i>Erstellt am: <%= request.getAttribute("timestamp") %></i></p>

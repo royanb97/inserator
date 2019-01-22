@@ -1,7 +1,7 @@
 package store;
 
 import java.io.Serializable;
-
+@Deprecated
 public class Anzeige implements Serializable {
 	private String title;
 	private float price;
