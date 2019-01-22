@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,17 +34,25 @@ public class userServlet extends HttpServlet {
 		String name = null;
 		String registDate = null;
 		Connection con = null;
+		ArrayList<String> offered = new ArrayList<>();
 		
 		try {
 			con = DB2Util.getExternalConnection("jspprj");
 			PreparedStatement ps = con.prepareStatement("SELECT name, eintrittsdatum FROM dbp20.Benutzer WHERE benutzername=?");
+			PreparedStatement ps2 = con.prepareStatement("SELECT titel, preis, erstellungsdatum FROM dbp20.anzeige WHERE ersteller=?");
 			ps.setString(1, user);
+			ps2.setString(1, user);
 			ResultSet rs = ps.executeQuery();
+			ResultSet rs2 = ps2.executeQuery();
 			
 			while(rs.next()) {
 				name = rs.getString("name");
 				registDate = rs.getString("eintrittsdatum");
 				registDate = registDate.substring(0, 10);
+			}
+			
+			while(rs2.next()) {
+				offered.add(rs2.getString("titel"));
 			}
 			
 		} catch (SQLException e) {
@@ -58,9 +67,11 @@ public class userServlet extends HttpServlet {
 			}
 		}
 		
+		
 		request.setAttribute("name", name);
 		request.setAttribute("user", user);
 		request.setAttribute("registDate", registDate);
+		request.setAttribute("offered", offered);
 		request.getRequestDispatcher("user.jsp").include(request, response);
 	}
 
