@@ -43,8 +43,8 @@ public class AnzeigeDetailsServlet extends HttpServlet {
 		String timestamp = null;
 		String seller = null;
 		String buyer = "k.ralf"; //Example user who's already logged in
-		String comment = null;
-		String commentCreator = null;
+		ArrayList<String> comment = new ArrayList<>();
+		ArrayList<String> commentName = new ArrayList<>();
 		
 		
 		Connection con = null;
@@ -61,7 +61,7 @@ public class AnzeigeDetailsServlet extends HttpServlet {
 				price = rs.getFloat("Preis");
 				description = rs.getString("Text");
 				timestamp = rs.getString("Erstellungsdatum");
-				//System.out.println(title);				
+								
 			}
 			
 		} catch (SQLException sqle) {

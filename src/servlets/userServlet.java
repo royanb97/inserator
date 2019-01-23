@@ -35,15 +35,26 @@ public class userServlet extends HttpServlet {
 		String registDate = null;
 		Connection con = null;
 		ArrayList<String> offered = new ArrayList<>();
+		ArrayList<Float> offeredPrice = new ArrayList<>();
+		ArrayList<String> offeredDate = new ArrayList<>();
+		ArrayList<String> offeredStatus = new ArrayList<>();
+		
+		ArrayList<String> sold = new ArrayList<>();
+		ArrayList<Float> soldPrice = new ArrayList<>();
+		ArrayList<String> soldDate = new ArrayList<>();
+		ArrayList<String> soldSeller = new ArrayList<>();
 		
 		try {
 			con = DB2Util.getExternalConnection("jspprj");
 			PreparedStatement ps = con.prepareStatement("SELECT name, eintrittsdatum FROM dbp20.Benutzer WHERE benutzername=?");
-			PreparedStatement ps2 = con.prepareStatement("SELECT titel, preis, erstellungsdatum FROM dbp20.anzeige WHERE ersteller=?");
+			PreparedStatement ps2 = con.prepareStatement("SELECT titel, preis, erstellungsdatum, status FROM dbp20.anzeige WHERE ersteller=?");
+			PreparedStatement ps3 = con.prepareStatement("SELECT titel, preis, erstellungsdatum, ersteller FROM dbp20.anzeige JOIN dbp20.kauft ON anzeigeid=id WHERE dbp20.kauft.benutzername=?");
 			ps.setString(1, user);
 			ps2.setString(1, user);
+			ps3.setString(1, user);
 			ResultSet rs = ps.executeQuery();
 			ResultSet rs2 = ps2.executeQuery();
+			ResultSet rs3 = ps3.executeQuery();
 			
 			while(rs.next()) {
 				name = rs.getString("name");
@@ -53,6 +64,17 @@ public class userServlet extends HttpServlet {
 			
 			while(rs2.next()) {
 				offered.add(rs2.getString("titel"));
+				offeredPrice.add(rs2.getFloat("preis"));
+				offeredDate.add(rs2.getString("erstellungsdatum"));
+				offeredStatus.add(rs2.getString("status"));
+			}
+			
+			while(rs3.next()) {
+				sold.add(rs3.getString("titel"));
+				soldSeller.add(rs3.getString("ersteller"));
+				soldDate.add(rs3.getString("erstellungsdatum"));
+				soldPrice.add(rs3.getFloat("preis"));
+				
 			}
 			
 		} catch (SQLException e) {
@@ -72,6 +94,13 @@ public class userServlet extends HttpServlet {
 		request.setAttribute("user", user);
 		request.setAttribute("registDate", registDate);
 		request.setAttribute("offered", offered);
+		request.setAttribute("offeredPrice", offeredPrice);
+		request.setAttribute("offeredDate", offeredDate);
+		request.setAttribute("offeredStatus", offeredStatus);
+		request.setAttribute("sold", sold);
+		request.setAttribute("soldSeller", soldSeller);
+		request.setAttribute("soldPrice", soldPrice);
+		request.setAttribute("soldDate", soldDate);
 		request.getRequestDispatcher("user.jsp").include(request, response);
 	}
 
