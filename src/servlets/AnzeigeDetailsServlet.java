@@ -53,8 +53,13 @@ public class AnzeigeDetailsServlet extends HttpServlet {
 		try {
 			con = DB2Util.getExternalConnection("jspprj");
 			PreparedStatement ps = con.prepareStatement("SELECT Titel, Ersteller, Preis, Text, Erstellungsdatum FROM dbp20.Anzeige WHERE id=?");
+			PreparedStatement ps2 = con.prepareStatement("SELECT Text, Benutzername FROM dbp20.Kommentar, dbp20.HatKommentar WHERE id=kommentarid AND anzeigeid=? ORDER BY erstellungsdatum ASC");
 			ps.setInt(1, anzeigeID);
+			ps2.setInt(1, anzeigeID);
+			
 			ResultSet rs = ps.executeQuery();
+			ResultSet rs2 = ps2.executeQuery();
+			
 			while(rs.next()) {
 				title = rs.getString("Titel");
 				seller = rs.getString("Ersteller");
@@ -62,6 +67,11 @@ public class AnzeigeDetailsServlet extends HttpServlet {
 				description = rs.getString("Text");
 				timestamp = rs.getString("Erstellungsdatum");
 								
+			}
+			
+			while(rs2.next()) {
+				comment.add(rs2.getString("Text"));
+				commentName.add(rs2.getString("Benutzername"));
 			}
 			
 		} catch (SQLException sqle) {
@@ -84,6 +94,9 @@ public class AnzeigeDetailsServlet extends HttpServlet {
 		request.setAttribute("timestamp", timestamp);
 		request.setAttribute("seller", seller);
 		request.setAttribute("buyer", buyer);
+		request.setAttribute("comment", comment);
+		request.setAttribute("commentName", commentName);
+		request.setAttribute("anzeigeParam", anzeigeID);
 		request.getRequestDispatcher("AnzeigeDetails.jsp").forward(request, response);
 		
 		
@@ -93,8 +106,43 @@ public class AnzeigeDetailsServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		int anzeigeID = Integer.parseInt(request.getParameter("anzeigeParam"));
+		String user="k.ralf";
+		String newComment = request.getParameter("newComment");
+		int commentID = 0;
+		Connection con = null;
+		
+		try {
+			con = DB2Util.getExternalConnection("jspprj");
+			PreparedStatement ps = con.prepareStatement("INSERT INTO dbp20.Kommentar (Text) values (?)");
+			PreparedStatement ps2 = con.prepareStatement("INSERT INTO dbp20.hatkommentar (Benutzername, anzeigeid, kommentarid) values (?,?,?)");
+			PreparedStatement fetchID = con.prepareStatement("SELECT id from dbp20.kommentar ORDER BY id DESC FETCH FIRST ROW ONLY");
+			ps.setString(1, newComment);
+			ps.execute();
+			
+			ResultSet rs = fetchID.executeQuery();
+			while(rs.next()) {
+				commentID = rs.getInt("id");
+			}
+			
+			ps2.setString(1, user);
+			ps2.setInt(2, anzeigeID);
+			ps2.setInt(3, commentID);
+			ps2.execute();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		response.sendRedirect(request.getContextPath() + "/AnzeigeDetails?anzeigeParam="+anzeigeID);
 	}
 
 }

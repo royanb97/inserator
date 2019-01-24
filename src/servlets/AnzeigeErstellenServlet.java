@@ -65,7 +65,7 @@ public class AnzeigeErstellenServlet extends HttpServlet {
 					ResultSet rs = stmt.executeQuery();
 					while(rs.next())
 					id = rs.getInt("id");
-					System.out.println("Erstelle " + title + ", " + description + " mit Kategorie " + category + " mit ID " + id);
+					//System.out.println("Erstelle " + title + ", " + description + " mit Kategorie " + category + " mit ID " + id);
 					ps2.setInt(1, id);					
 					ps2.setString(2, category);
 					

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,9 @@
 <title>Anzeige Details</title>
 </head>
 <body>
+	<% ArrayList<String> comment = (ArrayList<String>) request.getAttribute("comment");
+	   ArrayList<String> commentName = (ArrayList<String>) request.getAttribute("commentName");%>
+	
 	<h1>Anzeige Details</h1>
 	
 	<h2><%= request.getAttribute("title") %></h2>
@@ -28,6 +32,15 @@
 	<br/>
 	<hr/>
 	<h3>Kommentare</h3>
-	<p>null</p>
+	<% for(int i=0; i<comment.size(); i++){ %>
+	<p><i><% out.println(commentName.get(i)); %> schrieb: </i>
+	<p><% out.println(comment.get(i)); %>
+	<% } %>
+	
+	<form action="AnzeigeDetails?anzeigeParam=<%= request.getAttribute("anzeigeParam")%>" method="POST">
+	 <input type="text" name="newComment" style="width:600px; height:100px" required>
+	 <input type="submit" value="Kommentar erstellen">
+	
+	</form>
 </body>
 </html>
